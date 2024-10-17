@@ -37,4 +37,4 @@ jobs:
         with:
           fromPhoneNumber: '${{ env.TWILIO_PHONE_NUMBER }}'
           toPhoneNumber: '${{ env.RECIPIENT_PHONE_NUMBER }}'
-          message: 'Foi essa merda'
+          message: 'Acabou de ser feito um push na branch Main do seu projeto da Pokedex'
