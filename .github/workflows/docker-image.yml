@@ -18,6 +18,11 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{secrets.DOCKERHUB_USERNAME}}/pokedex:$(date +%s)
+    - name: Build docker image
+      uses: docker/build-push-action@v3.2.0
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/pokedex:${{ github.run_number }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/pokedex:latest
