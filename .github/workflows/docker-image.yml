@@ -35,6 +35,6 @@ jobs:
       - name: 'Send WhatsApp message'
         uses: twilio-labs/actions-sms@v1
         with:
-          fromPhoneNumber: '$TWILIO_PHONE_NUMBER' # alternatively, use a Repository Secret
-          toPhoneNumber: '$RECIPIENT_PHONE_NUMBER' # alternatively, use a Repository Secret
-          message: 'Hello from Twilio'
+          fromPhoneNumber: '${{ env.TWILIO_PHONE_NUMBER }}'
+          toPhoneNumber: '${{ env.RECIPIENT_PHONE_NUMBER }}'
+          message: 'Foi essa merda'
