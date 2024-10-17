@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+env:
+  TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
+  RECIPIENT_PHONE_NUMBER: ${{ secrets.RECIPIENT_PHONE_NUMBER }}
+
 jobs:
   send_whatsapp:
     runs-on: ubuntu-latest
@@ -25,20 +31,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Faz o checkout do código
-      - name: Checkout code
-        uses: actions/checkout@v3
-
       # Envia mensagem de WhatsApp
-      - name: Send WhatsApp message
-        env:
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
-          RECIPIENT_PHONE_NUMBER: ${{ secrets.RECIPIENT_PHONE_NUMBER }}
-        run: |
-          curl -X POST https://api.twilio.com/2010-04-01/Accounts/$TWILIO_ACCOUNT_SID/Messages.json \
-          --data-urlencode "To=whatsapp:$RECIPIENT_PHONE_NUMBER" \
-          --data-urlencode "From=whatsapp:$TWILIO_PHONE_NUMBER" \
-          --data-urlencode "Body=New commit pushed to the main branch!" \
-          -u $TWILIO_ACCOUNT_SID:$TWILIO_AUTH_TOKEN
+      - name: 'Send WhatsApp message'
+        uses: twilio-labs/actions-sms@v1
+        with:
+          fromPhoneNumber: '$TWILIO_PHONE_NUMBER' # alternatively, use a Repository Secret
+          toPhoneNumber: '$RECIPIENT_PHONE_NUMBER' # alternatively, use a Repository Secret
+          message: 'Hello from Twilio'
