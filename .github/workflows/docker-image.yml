@@ -1,26 +1,23 @@
-name: Docker Image CI
+name: Send WhatsApp Message on Main Branch Commit
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-
-  build:
-
+  send_whatsapp:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Login to docker hub
-      uses: docker/login-action@v2.1.0
-      with:
-        username: tjfaccipieri
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build docker image
-      uses: docker/build-push-action@v3.2.0
-      with:
-        context: .
-        push: true
-        tags: tjfaccipieri/pokedex:latest
+      # Faz o checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Gera o link de WhatsApp e imprime no log
+      - name: Generate WhatsApp Link
+        run: |
+          PHONE_NUMBER="+5513992084000"
+          MESSAGE="Novo commit na branch main! Acesse o repositório para mais detalhes."
+          WHATSAPP_URL="https://wa.me/${PHONE_NUMBER}?text=$(echo $MESSAGE | jq -sRr @uri)"
+          echo "Acesse o seguinte link para enviar a mensagem pelo WhatsApp: $WHATSAPP_URL"
