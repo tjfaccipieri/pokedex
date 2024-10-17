@@ -20,7 +20,7 @@ jobs:
           PHONE_NUMBER="+5513992084000"
           MESSAGE="Novo commit na branch main! Acesse o repositório para mais detalhes."
           WHATSAPP_URL="https://wa.me/${PHONE_NUMBER}?text=$(echo $MESSAGE | jq -sRr @uri)"
-          echo "Acesse o seguinte link para enviar a mensagem pelo WhatsApp: $WHATSAPP_URL"
+          echo "Acesse o seguinte link para enviar a mensagem pelo WhatsAp: $WHATSAPP_URL"
   send_whatsapp-twilio:
     runs-on: ubuntu-latest
 
